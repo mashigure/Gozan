@@ -1,0 +1,17 @@
+####################################################
+# Syntax Coloring Map For Gozan
+####################################################
+
+##########################################
+# Datatypes (KEYWORD1)
+##########################################
+Gozan	KEYWORD1
+Pixel	KEYWORD1
+PatternData	KEYWORD1
+
+##########################################
+#  Methods and Functions (KEYWORD2)
+##########################################
+setPattern	KEYWORD2
+update	KEYWORD2
+RGB2PIXEL	KEYWORD2
