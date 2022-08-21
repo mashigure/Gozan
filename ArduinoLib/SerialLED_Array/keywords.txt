@@ -1,11 +1,11 @@
 ####################################################
-# Syntax Coloring Map For Gozan
+# Syntax Coloring Map For SerialLED_Array
 ####################################################
 
 ##########################################
 # Datatypes (KEYWORD1)
 ##########################################
-Gozan	KEYWORD1
+SerialLED_Array	KEYWORD1
 
 ##########################################
 #  Methods and Functions (KEYWORD2)

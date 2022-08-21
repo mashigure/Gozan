@@ -1,7 +1,7 @@
 #include <Adafruit_NeoPixel.h>
 
-#ifndef GOZAN_H
-#define GOZAN_H
+#ifndef SERIALLED_ARRAY_H
+#define SERIALLED_ARRAY_H
 
 ///----------------------------------------------------------------
 /// RGB LED color convert
@@ -25,9 +25,9 @@ public:
 
 
 ///----------------------------------------------------------------
-/// Gozan: Utility for NeoPixel Illumination
+/// SerialLED_Array: Utility for NeoPixel Illumination
 ///----------------------------------------------------------------
-class Gozan
+class SerialLED_Array
 {
     Adafruit_NeoPixel neo_pix;
     WaitCounter       counter;
@@ -39,7 +39,7 @@ class Gozan
     bool              is_playing;
 
 public:
-    Gozan(uint16_t led_num, int16_t pin = 6, neoPixelType type = NEO_GRB + NEO_KHZ800);
+    SerialLED_Array(uint16_t led_num, int16_t pin = 6, neoPixelType type = NEO_GRB + NEO_KHZ800);
     void     begin(void);
     void     show(void);
     void     clear(void);
@@ -50,4 +50,4 @@ public:
     void     update(void);
 };
 
-#endif // GOZAN_H
+#endif // SERIALLED_ARRAY_H

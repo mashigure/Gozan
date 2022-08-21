@@ -1,4 +1,4 @@
-#include "Gozan.h"
+#include "SerialLED_Array.h"
 
 WaitCounter::WaitCounter()
 {

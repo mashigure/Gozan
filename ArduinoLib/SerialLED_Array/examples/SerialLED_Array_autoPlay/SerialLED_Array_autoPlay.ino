@@ -1,10 +1,10 @@
-#include <Gozan.h>
+#include <SerialLED_Array.h>
 
 #define NEOPIXEL_NUM   (16)
 #define NEOPIXEL_PIN   ( 6)    // please rewrite for your hardware.
 #define DATA01_SEQ_NUM (16)
 
-Gozan gozan(NEOPIXEL_NUM, NEOPIXEL_PIN);
+SerialLED_Array pixel(NEOPIXEL_NUM, NEOPIXEL_PIN);
 
 const uint32_t data01[NEOPIXEL_NUM * DATA01_SEQ_NUM] = {
     0x400000, 0x300800, 0x201000, 0x102000, 0x083000, 0x044000, 0x004004, 0x003008, 0x002010, 0x001020, 0x000830, 0x000040, 0x080030, 0x100020, 0x200010, 0x300008,
@@ -27,11 +27,11 @@ const uint32_t data01[NEOPIXEL_NUM * DATA01_SEQ_NUM] = {
 
 void setup()
 {
-    gozan.begin();
-    gozan.autoPlay(data01, DATA01_SEQ_NUM, 100, true);
+    pixel.begin();
+    pixel.autoPlay(data01, DATA01_SEQ_NUM, 100, true);
 }
 
 void loop()
 {
-    gozan.update();
+    pixel.update();
 }

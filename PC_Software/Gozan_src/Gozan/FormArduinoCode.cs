@@ -94,13 +94,13 @@ namespace Gozan
             string data_part = getDataString(csv_data);
 
             textBoxCode.Text =
-                "#include <Gozan.h>\r\n" +
+                "#include <SerialLED_Array.h>\r\n" +
                 "\r\n" +
                 "#define NEOPIXEL_NUM   (" + led_num + ")\r\n" +
                 "#define NEOPIXEL_PIN   (6)    // please rewrite for your hardware.\r\n" +
                 "#define DATA01_SEQ_NUM (" + seq_num + ")\r\n" +
                 "\r\n" +
-                "Gozan gozan(NEOPIXEL_NUM, NEOPIXEL_PIN);\r\n" +
+                "SerialLED_Array pixel(NEOPIXEL_NUM, NEOPIXEL_PIN);\r\n" +
                 "\r\n" +
                 "const uint32_t data01[NEOPIXEL_NUM * DATA01_SEQ_NUM] = {\r\n" +
                 data_part+
@@ -108,13 +108,13 @@ namespace Gozan
                 "\r\n" +
                 "void setup()\r\n" +
                 "{\r\n" +
-                "    gozan.begin();\r\n" +
-                "    gozan.autoPlay(data01, DATA01_SEQ_NUM, 100, true);\r\n" +
+                "    pixel.begin();\r\n" +
+                "    pixel.autoPlay(data01, DATA01_SEQ_NUM, 100, true);\r\n" +
                 "}\r\n" +
                 "\r\n" +
                 "void loop()\r\n" +
                 "{\r\n" +
-                "    gozan.update();\r\n" +
+                "    pixel.update();\r\n" +
                 "}\r\n";
         }
 

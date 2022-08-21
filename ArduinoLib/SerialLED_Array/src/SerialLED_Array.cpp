@@ -1,6 +1,6 @@
-#include "Gozan.h"
+#include "SerialLED_Array.h"
 
-Gozan::Gozan(uint16_t led_num, int16_t pin, neoPixelType type):
+SerialLED_Array::SerialLED_Array(uint16_t led_num, int16_t pin, neoPixelType type):
     neo_pix(led_num, pin, type),
     counter(),
     led_data(nullptr),
@@ -12,22 +12,22 @@ Gozan::Gozan(uint16_t led_num, int16_t pin, neoPixelType type):
 {
 }
 
-void Gozan::begin(void)
+void SerialLED_Array::begin(void)
 {
     neo_pix.begin();
 }
 
-void Gozan::show(void)
+void SerialLED_Array::show(void)
 {
     neo_pix.show();
 }
 
-void Gozan::clear(void)
+void SerialLED_Array::clear(void)
 {
     neo_pix.clear();
 }
 
-void Gozan::autoPlay(uint32_t const *data, uint32_t sequens_num, uint32_t one_shot_ms, bool repeat)
+void SerialLED_Array::autoPlay(uint32_t const *data, uint32_t sequens_num, uint32_t one_shot_ms, bool repeat)
 {
     if (data != nullptr)
     {
@@ -41,12 +41,12 @@ void Gozan::autoPlay(uint32_t const *data, uint32_t sequens_num, uint32_t one_sh
     }
 }
 
-bool Gozan::isPlaying(void)
+bool SerialLED_Array::isPlaying(void)
 {
     return is_playing;
 }
 
-void Gozan::setPixelColor(uint32_t const *data, uint16_t sequence)
+void SerialLED_Array::setPixelColor(uint32_t const *data, uint16_t sequence)
 {
     uint16_t led_num = neo_pix.numPixels();
 
@@ -56,7 +56,7 @@ void Gozan::setPixelColor(uint32_t const *data, uint16_t sequence)
     }
 }
 
-uint32_t Gozan::getPixelColor(uint32_t const *data, uint16_t sequence, uint16_t led_no)
+uint32_t SerialLED_Array::getPixelColor(uint32_t const *data, uint16_t sequence, uint16_t led_no)
 {
     uint32_t dat_pos = (sequence * neo_pix.numPixels()) + led_no;
 
@@ -68,7 +68,7 @@ uint32_t Gozan::getPixelColor(uint32_t const *data, uint16_t sequence, uint16_t 
     return data[dat_pos];
 }
 
-void Gozan::update(void)
+void SerialLED_Array::update(void)
 {
     if (is_playing && counter.isCounted())
     {

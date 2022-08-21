@@ -1,20 +1,20 @@
-# Gozan
+# SerialLED_Array
 
-Gozanは、WS2812Bなどのシリアル通信でフルカラーLEDを制御できるLEDモジュール（adafruit社のNeoPixel等）をArduinoから制御する際に、
+SerialLED_Arrayは、WS2812Bなどのシリアル通信でフルカラーLEDを制御できるLEDモジュール（adafruit社のNeoPixel等）をArduinoから制御する際に、
 点灯パターンを配列に記載し、配列から読み込んで使うことを想定したライブラリです。
 
 あらかじめLEDの点灯パターンを全て配列として用意することで、ソースコードの本体をシンプルなものにする（LED制御以外のロジックに集中できる）ようにすることをコンセプトにしています。
 
-Gozanの実態は、Adafruit_NeoPixelライブラリのラッパです。
+SerialLED_Arrayの実態は、Adafruit_NeoPixelライブラリのラッパーです。
 内部で「Adafruit_NeoPixel.h」を使用しています。
 
 参考： https://github.com/adafruit/Adafruit_NeoPixel
 
-![img/Gozan_screenshot.png](img/Gozan_sample_screenshot.png)
+![img/Lib_sample_screenshot.png](img/Lib_sample_screenshot.png)
 
 
 
-## Gozanクラス 関数 リファレンス
+## SerialLED_Arrayクラス 関数 リファレンス
 
 + void     begin(void);
 + void     show(void);
