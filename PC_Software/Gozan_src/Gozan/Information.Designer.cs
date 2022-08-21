@@ -70,7 +70,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(103, 15);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Gozan ver. 0.01 (α)";
+            this.label3.Text = "Gozan ver. 0.02 (α)";
             // 
             // label4
             // 

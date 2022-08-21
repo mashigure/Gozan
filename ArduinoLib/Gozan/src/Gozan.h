@@ -10,47 +10,6 @@
 
 
 ///----------------------------------------------------------------
-/// LED Illumination Pattern (one scene)
-///----------------------------------------------------------------
-typedef struct
-{
-    uint32_t const *pixel;          // pixel[led_length];
-} Pixel;
-
-
-///----------------------------------------------------------------
-/// LED Illumination Pattern
-///----------------------------------------------------------------
-typedef struct
-{
-    uint16_t max_sequence;
-    uint16_t led_length;
-    int32_t  const *show_time;
-    Pixel    const *sequence;       // sequence[max_sequence].pixel[led_length];
-} PatternData;
-
-
-///----------------------------------------------------------------
-/// class to management Illumination Patterns
-///----------------------------------------------------------------
-class Pattern
-{
-protected:
-    PatternData const *data;
-
-public:
-    static const int32_t SHOW_INFINITY = -1;
-
-    Pattern();
-    Pattern(PatternData const *pattern);
-    uint16_t getMaxSequence(void);
-    uint16_t getLedLength(void);
-    int32_t  getShowTime(uint16_t sequence);
-    uint32_t getPixelColor(uint16_t sequence, uint16_t led_no);
-};
-
-
-///----------------------------------------------------------------
 /// Counter to wait for next scene
 ///----------------------------------------------------------------
 class WaitCounter
@@ -71,24 +30,24 @@ public:
 class Gozan
 {
     Adafruit_NeoPixel neo_pix;
-    Pattern           pattern;
     WaitCounter       counter;
-    uint32_t          current_seq;
+    const uint32_t *  led_data;
+    uint32_t          max_seq;
+    uint32_t          show_time;
     bool              repeat;
+    uint32_t          current_seq;
     bool              is_playing;
 
 public:
     Gozan(uint16_t led_num, int16_t pin = 6, neoPixelType type = NEO_GRB + NEO_KHZ800);
-    void begin(void);
-    void show(void);
-    void clear(void);
-    void update(void);
-    bool isPlaying(void);
-    void setPattern(PatternData const *pattern_data, bool repeat = true);
-    void setPixelColor(uint16_t sequence);
-
-private:
-    void play(void);
+    void     begin(void);
+    void     show(void);
+    void     clear(void);
+    void     autoPlay(uint32_t const *data, uint32_t sequens_num, uint32_t one_shot_ms, bool repeat = true);
+    bool     isPlaying(void);
+    void     setPixelColor(uint32_t const *data, uint16_t sequence);
+    uint32_t getPixelColor(uint32_t const *data, uint16_t sequence, uint16_t led_no);
+    void     update(void);
 };
 
 #endif // GOZAN_H

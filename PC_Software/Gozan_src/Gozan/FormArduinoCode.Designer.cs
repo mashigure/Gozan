@@ -30,107 +30,90 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormArduinoCode));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.buttonClipBoard = new System.Windows.Forms.Button();
+            this.checkBoxUseMacro = new System.Windows.Forms.CheckBox();
+            this.radioButtonDec = new System.Windows.Forms.RadioButton();
+            this.radioButtonHex = new System.Windows.Forms.RadioButton();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonClipBoard = new System.Windows.Forms.Button();
+            this.textBoxCode = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel1.Controls.Add(this.checkBoxUseMacro);
+            this.splitContainer1.Panel1.Controls.Add(this.radioButtonDec);
+            this.splitContainer1.Panel1.Controls.Add(this.radioButtonHex);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonSave);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonClipBoard);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.buttonClipBoard);
-            this.splitContainer1.Panel2.Controls.Add(this.buttonSave);
+            this.splitContainer1.Panel2.Controls.Add(this.textBoxCode);
             this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 400;
+            this.splitContainer1.SplitterDistance = 32;
             this.splitContainer1.TabIndex = 0;
             // 
-            // tabControl1
+            // checkBoxUseMacro
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 400);
-            this.tabControl1.TabIndex = 0;
+            this.checkBoxUseMacro.AutoSize = true;
+            this.checkBoxUseMacro.Location = new System.Drawing.Point(357, 8);
+            this.checkBoxUseMacro.Name = "checkBoxUseMacro";
+            this.checkBoxUseMacro.Size = new System.Drawing.Size(105, 19);
+            this.checkBoxUseMacro.TabIndex = 4;
+            this.checkBoxUseMacro.Text = "Use RGB2PIXEL";
+            this.checkBoxUseMacro.UseVisualStyleBackColor = true;
+            this.checkBoxUseMacro.CheckedChanged += new System.EventHandler(this.checkBoxUseMacro_CheckedChanged);
             // 
-            // tabPage1
+            // radioButtonDec
             // 
-            this.tabPage1.Controls.Add(this.textBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 372);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = ".ino";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.radioButtonDec.AutoSize = true;
+            this.radioButtonDec.Location = new System.Drawing.Point(295, 7);
+            this.radioButtonDec.Name = "radioButtonDec";
+            this.radioButtonDec.Size = new System.Drawing.Size(45, 19);
+            this.radioButtonDec.TabIndex = 3;
+            this.radioButtonDec.Text = "Dec";
+            this.radioButtonDec.UseVisualStyleBackColor = true;
+            this.radioButtonDec.CheckedChanged += new System.EventHandler(this.radioButtonDec_CheckedChanged);
             // 
-            // textBox1
+            // radioButtonHex
             // 
-            this.textBox1.AcceptsTab = true;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("ＭＳ ゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(786, 366);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.WordWrap = false;
+            this.radioButtonHex.AutoSize = true;
+            this.radioButtonHex.Checked = true;
+            this.radioButtonHex.Location = new System.Drawing.Point(243, 7);
+            this.radioButtonHex.Name = "radioButtonHex";
+            this.radioButtonHex.Size = new System.Drawing.Size(46, 19);
+            this.radioButtonHex.TabIndex = 2;
+            this.radioButtonHex.TabStop = true;
+            this.radioButtonHex.Text = "Hex";
+            this.radioButtonHex.UseVisualStyleBackColor = true;
+            this.radioButtonHex.CheckedChanged += new System.EventHandler(this.radioButtonHex_CheckedChanged);
             // 
-            // tabPage2
+            // buttonSave
             // 
-            this.tabPage2.Controls.Add(this.textBox2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 372);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "data.cpp";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.AcceptsTab = true;
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Font = new System.Drawing.Font("ＭＳ ゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox2.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.textBox2.Location = new System.Drawing.Point(3, 3);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox2.Size = new System.Drawing.Size(786, 366);
-            this.textBox2.TabIndex = 0;
-            this.textBox2.WordWrap = false;
+            this.buttonSave.Location = new System.Drawing.Point(3, 3);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.TabIndex = 0;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonClipBoard
             // 
-            this.buttonClipBoard.Location = new System.Drawing.Point(93, 11);
+            this.buttonClipBoard.Location = new System.Drawing.Point(84, 3);
             this.buttonClipBoard.Name = "buttonClipBoard";
             this.buttonClipBoard.Size = new System.Drawing.Size(128, 23);
             this.buttonClipBoard.TabIndex = 1;
@@ -138,15 +121,19 @@
             this.buttonClipBoard.UseVisualStyleBackColor = true;
             this.buttonClipBoard.Click += new System.EventHandler(this.buttonClipBoard_Click);
             // 
-            // buttonSave
+            // textBoxCode
             // 
-            this.buttonSave.Location = new System.Drawing.Point(12, 11);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 0;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.textBoxCode.AcceptsTab = true;
+            this.textBoxCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxCode.Font = new System.Drawing.Font("ＭＳ ゴシック", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxCode.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.textBoxCode.Location = new System.Drawing.Point(0, 0);
+            this.textBoxCode.Multiline = true;
+            this.textBoxCode.Name = "textBoxCode";
+            this.textBoxCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxCode.Size = new System.Drawing.Size(800, 414);
+            this.textBoxCode.TabIndex = 0;
+            this.textBoxCode.WordWrap = false;
             // 
             // saveFileDialog1
             // 
@@ -162,14 +149,11 @@
             this.Name = "FormArduinoCode";
             this.Text = "Code for Arduino";
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -177,13 +161,12 @@
         #endregion
 
         private SplitContainer splitContainer1;
-        private TabControl tabControl1;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
         private Button buttonSave;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox textBoxCode;
         private SaveFileDialog saveFileDialog1;
         private Button buttonClipBoard;
+        private RadioButton radioButtonDec;
+        private RadioButton radioButtonHex;
+        private CheckBox checkBoxUseMacro;
     }
 }

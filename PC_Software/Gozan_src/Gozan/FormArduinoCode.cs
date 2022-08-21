@@ -12,9 +12,17 @@ namespace Gozan
 {
     public partial class FormArduinoCode : Form
     {
+        private string led_num;
+        private string seq_num;
+        private string data_name;
+        private string csv_data;
 
         public FormArduinoCode()
         {
+            led_num = "1";
+            seq_num = "0";
+            data_name = "";
+            csv_data = "";
             InitializeComponent();
         }
 
@@ -46,81 +54,68 @@ namespace Gozan
                 }
 
                 string ino_file = path + "\\" + project_name + ".ino";
-                string dat_file = path + "\\" + tabPage2.Text;
 
-                System.IO.File.WriteAllText(ino_file, textBox1.Text);
-                System.IO.File.WriteAllText(dat_file, textBox2.Text);
+                System.IO.File.WriteAllText(ino_file, textBoxCode.Text);
             }
-
         }
 
-        public void setInoCode(string led_num, string data_var_name)
+        private void buttonClipBoard_Click(object sender, EventArgs e)
         {
-            textBox1.Text =
+            Clipboard.SetText(textBoxCode.Text);
+        }
+
+        private void radioButtonHex_CheckedChanged(object sender, EventArgs e)
+        {
+            writeSampleCode();
+        }
+
+        private void radioButtonDec_CheckedChanged(object sender, EventArgs e)
+        {
+            writeSampleCode();
+        }
+
+        private void checkBoxUseMacro_CheckedChanged(object sender, EventArgs e)
+        {
+            writeSampleCode();
+        }
+
+        public void setCode(string led_num, string data_var_name, string csv_data)
+        {
+            this.led_num   = led_num;
+            this.seq_num   = getNumSequence(csv_data).ToString();
+            this.data_name = data_var_name;
+            this.csv_data  = csv_data;
+
+            writeSampleCode();
+        }
+
+        private void writeSampleCode()
+        {
+            string data_part = getDataString(csv_data);
+
+            textBoxCode.Text =
                 "#include <Gozan.h>\r\n" +
                 "\r\n" +
-                "#define NEOPIXEL_NUM (" + led_num + ")\r\n" +
-                "#define NEOPIXEL_PIN (6)    // please rewrite for your hardware.\r\n" +
+                "#define NEOPIXEL_NUM   (" + led_num + ")\r\n" +
+                "#define NEOPIXEL_PIN   (6)    // please rewrite for your hardware.\r\n" +
+                "#define DATA01_SEQ_NUM (" + seq_num + ")\r\n" +
                 "\r\n" +
-                "extern PatternData " + data_var_name + ";\r\n" +
+                "Gozan gozan(NEOPIXEL_NUM, NEOPIXEL_PIN);\r\n" +
                 "\r\n" +
-                "Gozan pixels(NEOPIXEL_NUM, NEOPIXEL_PIN);\r\n" +
+                "const uint32_t data01[NEOPIXEL_NUM * DATA01_SEQ_NUM] = {\r\n" +
+                data_part+
+                "};\r\n" +
                 "\r\n" +
                 "void setup()\r\n" +
                 "{\r\n" +
-                "    pixels.begin();\r\n" +
-                "    pixels.setPattern(&" + data_var_name + ");\r\n" +
+                "    gozan.begin();\r\n" +
+                "    gozan.autoPlay(data01, DATA01_SEQ_NUM, 100, true);\r\n" +
                 "}\r\n" +
                 "\r\n" +
                 "void loop()\r\n" +
                 "{\r\n" +
-                "    pixels.update();\r\n" +
+                "    gozan.update();\r\n" +
                 "}\r\n";
-
-        }
-
-        public void setDataCode(string led_num, string data_var_name, string csv_data)
-        {
-            UInt32 seq_num = getNumSequence(csv_data);
-
-            tabPage2.Text = data_var_name + ".cpp";
-
-            textBox2.Text =
-                "#include <Gozan.h>\r\n" +
-                "\r\n" +
-                "#define SEQUENCE_NUM (" + seq_num.ToString() + ")\r\n" +
-                "#define PIXELS_NUM   (" + led_num.ToString() + ")\r\n" +
-                "\r\n" +
-                "const int32_t show_time[" + "] = { " + getShowTimesString(csv_data) + " };\r\n" +
-                "\r\n" +
-                "const uint32_t pixels[SEQUENCE_NUM][SEQUENCE_NUM] = {\r\n";
-
-            textBox2.Text += getPixelsString(csv_data);
-
-            textBox2.Text +=
-                "};\r\n" +
-                "\r\n" +
-                "const Pixel sequence[SEQUENCE_NUM] = {\r\n    ";
-
-            for (int i=0; i< seq_num; i++)
-            {
-                if (i != 0)
-                {
-                    textBox2.Text += ", ";
-                }
-                textBox2.Text += "pixels[" + i.ToString() + "]";
-            }
-
-            textBox2.Text +=
-                "\r\n" +
-                "};\r\n" +
-                "\r\n" +
-                "PatternData " + data_var_name + " = {\r\n" +
-                "    SEQUENCE_NUM,\r\n" +
-                "    PIXELS_NUM,\r\n" +
-                "    show_time,\r\n" +
-                "    sequence\r\n" +
-                "};\r\n";
         }
 
         private UInt32 getNumSequence(string csv_data)
@@ -139,30 +134,7 @@ namespace Gozan
             return num;
         }
 
-        private string getShowTimesString(string csv_data)
-        {
-            string show_times = "";
-
-            for (int i = 0; i < csv_data.Split("\r\n").Length; i++)
-            {
-                if (csv_data.Split("\r\n")[i].Split(",").Length <= 1)
-                {
-                    // invalid line (after last line?)
-                    break;
-                }
-
-                if (i != 0)
-                {
-                    show_times += ", ";
-                }
-
-                show_times += csv_data.Split("\r\n")[i].Split(",")[0];
-            }
-
-            return show_times;
-        }
-
-        private string getPixelsString(string csv_data)
+        private string getDataString(string csv_data)
         {
             string pixels = "";
 
@@ -179,20 +151,20 @@ namespace Gozan
                     pixels += ",\r\n";
                 }
 
-                pixels += getOneShotPixelsString(csv_data.Split("\r\n")[i]);
+                pixels += "    " + getOneShotDataString(csv_data.Split("\r\n")[i]);
             }
 
             pixels += "\r\n";
             return pixels;
         }
 
-        private string getOneShotPixelsString(string csv_one_line)
+        private string getOneShotDataString(string csv_one_line)
         {
-            string pixels = "    { ";
+            string pixels = "";
 
-            for (int i = 1; i < csv_one_line.Split(",").Length; i++)
+            for (int i = 0; i < csv_one_line.Split(",").Length; i++)
             {
-                if (i != 1)
+                if (i != 0)
                 {
                     pixels += ", ";
                 }
@@ -200,50 +172,153 @@ namespace Gozan
                 pixels += getOnePixelString(csv_one_line.Split(",")[i]);
             }
 
-            pixels += "}";
-
             return pixels;
         }
 
         private string getOnePixelString(string csv_one_data)
         {
-            if ((csv_one_data.Length <= 0) || (csv_one_data.ToCharArray()[0] != '#'))
+            string red;
+            string green;
+            string blue;
+
+            if (csv_one_data.Length <= 0)
             {
                 return "";
             }
 
-            string pixel = "RGB2PIXEL(";
-
-            if (csv_one_data.Length == 7)
+            if (csv_one_data.ToCharArray()[0] == '#')
             {
-                pixel += "0x" + csv_one_data.ToCharArray()[1].ToString() + csv_one_data.ToCharArray()[2].ToString() + ", ";
-                pixel += "0x" + csv_one_data.ToCharArray()[3].ToString() + csv_one_data.ToCharArray()[4].ToString() + ", ";
-                pixel += "0x" + csv_one_data.ToCharArray()[5].ToString() + csv_one_data.ToCharArray()[6].ToString() + ")";
+                if (csv_one_data.Length == 7)
+                {
+                    red   = csv_one_data.ToCharArray()[1].ToString() + csv_one_data.ToCharArray()[2].ToString();
+                    green = csv_one_data.ToCharArray()[3].ToString() + csv_one_data.ToCharArray()[4].ToString();
+                    blue  = csv_one_data.ToCharArray()[5].ToString() + csv_one_data.ToCharArray()[6].ToString();
+                }
+                else if (csv_one_data.Length == 4)
+                {
+                    red   = csv_one_data.ToCharArray()[1].ToString();
+                    green = csv_one_data.ToCharArray()[2].ToString();
+                    blue  = csv_one_data.ToCharArray()[3].ToString();
+                }
+                else
+                {
+                    return csv_one_data;
+                }
             }
-            else if (csv_one_data.Length == 4)
+            else if ((csv_one_data.ToCharArray()[0] == '0') && (csv_one_data.ToCharArray()[1] == 'x'))
             {
-                pixel += "0x" + csv_one_data.ToCharArray()[1].ToString() + ", ";
-                pixel += "0x" + csv_one_data.ToCharArray()[2].ToString() + ", ";
-                pixel += "0x" + csv_one_data.ToCharArray()[3].ToString() + ")";
+                if (csv_one_data.Length == 8)
+                {
+                    red   = csv_one_data.ToCharArray()[2].ToString() + csv_one_data.ToCharArray()[3].ToString();
+                    green = csv_one_data.ToCharArray()[4].ToString() + csv_one_data.ToCharArray()[5].ToString();
+                    blue  = csv_one_data.ToCharArray()[6].ToString() + csv_one_data.ToCharArray()[7].ToString();
+                }
+                else if (csv_one_data.Length == 5)
+                {
+                    red   = csv_one_data.ToCharArray()[2].ToString();
+                    green = csv_one_data.ToCharArray()[3].ToString();
+                    blue  = csv_one_data.ToCharArray()[4].ToString();
+                }
+                else
+                {
+                    return csv_one_data;
+                }
             }
             else
             {
-                return "";
+                return csv_one_data;
+            }
+
+            string pixel;
+
+            if (checkBoxUseMacro.Checked)
+            {
+
+                pixel = getOnePixelString_usingRGB2PIXEL(red, green, blue);
+            }
+            else
+            {
+                pixel = getOnePixelString_withoutRGB2PIXEL(red, green, blue);
             }
 
             return pixel;
         }
 
-        private void buttonClipBoard_Click(object sender, EventArgs e)
+        private string getOnePixelString_usingRGB2PIXEL(string red, string green, string blue)
         {
-            if (tabControl1.SelectedIndex == 0)
+            string pixel = "RGB2PIXEL(";
+
+            if (radioButtonDec.Checked)
             {
-                Clipboard.SetText(textBox1.Text);
+                pixel += calcHexToDec(red).ToString()   + ", ";
+                pixel += calcHexToDec(green).ToString() + ", ";
+                pixel += calcHexToDec(blue).ToString()  + ")";
             }
             else
             {
-                Clipboard.SetText(textBox2.Text);
+                pixel += "0x" + red   + ", ";
+                pixel += "0x" + green + ", ";
+                pixel += "0x" + blue  + ")";
             }
+
+            return pixel;
+        }
+
+        private string getOnePixelString_withoutRGB2PIXEL(string red, string green, string blue)
+        {
+            string pixel = "";
+            UInt32 val_r;
+            UInt32 val_g;
+            UInt32 val_b;
+            UInt32 value;
+
+            val_r = calcHexToDec(red);
+            val_g = calcHexToDec(green);
+            val_b = calcHexToDec(blue);
+
+            value = (((val_r) << 16) | ((val_g) << 8) | (val_b));
+
+            if (radioButtonDec.Checked)
+            {
+                pixel = value.ToString();
+            }
+            else
+            {
+                pixel = "0x" + value.ToString("X6");
+            }
+
+            return pixel;
+        }
+
+        private UInt32 calcHexToDec(string hex)
+        {
+            UInt32 dec = 0;
+
+            for (int i = 0; i < hex.Length; i++)
+            {
+                char value = hex.ToCharArray()[i];
+
+                dec *= 16;
+                if (('0' <= value) && (value <= '9'))
+                {
+                    dec += (UInt32)(value - '0');
+                }
+                else if (('a' <= value) && (value <= 'f'))
+                {
+                    dec += (UInt32)(value - 'a') + 10;
+                }
+                else if (('A' <= value) && (value <= 'F'))
+                {
+                    dec += (UInt32)(value - 'A') + 10;
+                }
+                else
+                {
+                    /* invalid char */
+                    return 0;
+                }
+            }
+
+            return dec;
         }
     }
 }

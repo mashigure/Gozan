@@ -31,7 +31,6 @@ namespace Gozan
             CSVtextBox.Text = "";
             this.FilePath = "";
             this.Text = SoftwareName;
-            comboBoxLine.Text = "";
             CheckLEDnumber();
             setLEDNumber();
         }
@@ -117,7 +116,7 @@ namespace Gozan
 
         private void CheckLEDnumber()
         {
-            labelLEDnumber.Text = (CSVtextBox.Text.Split("\n")[0].Split(",").Length - 1).ToString();
+            labelLEDnumber.Text = (CSVtextBox.Text.Split("\n")[0].Split(",").Length).ToString();
         }
 
 
@@ -126,7 +125,6 @@ namespace Gozan
             CSVtextBox.Text = File.ReadAllText(value);
             UpdateFileName(value);
             CheckLEDnumber();
-            comboBoxLine.Text = "";
         }
 
 
@@ -167,8 +165,7 @@ namespace Gozan
                 data_label = FileName.Split(".")[0];
             }
 
-            formCode.setInoCode(labelLEDnumber.Text, data_label);
-            formCode.setDataCode(labelLEDnumber.Text, data_label, CSVtextBox.Text);
+            formCode.setCode(labelLEDnumber.Text, data_label, CSVtextBox.Text);
             formCode.ShowDialog();
         }
 
@@ -198,14 +195,14 @@ namespace Gozan
                     for (int i = 0; i < csv_data.Length; i++)
                     {
                         string[] onshot_data = csv_data[i].Split(",");
-                        if (formLED.led_num <= onshot_data.Length)
+                        if (formLED.led_num <= onshot_data.Length -1)
                         {
-                            for (int j = 0; j < formLED.led_num; j++)
+                            for (int j = 0; j < formLED.led_num -1; j++)
                             {
                                 CSVtextBox.Text += onshot_data[j];
                                 CSVtextBox.Text += ",";
                             }
-                            CSVtextBox.Text += onshot_data[formLED.led_num] + "\r\n";
+                            CSVtextBox.Text += onshot_data[formLED.led_num -1] + "\r\n";
                         }
                     }
                 }
@@ -278,41 +275,12 @@ namespace Gozan
                 CSVtextBox.Text += "\r\n";
             }
 
-            for (int i = 0; i < int.Parse(labelLEDnumber.Text); i++)
+            for (int i = 0; i < int.Parse(labelLEDnumber.Text)-1; i++)
             {
                 CSVtextBox.Text += ",";
             }
 
             CSVtextBox.Text += "\r\n";
-        }
-
-        private void comboBoxLine_DropDown(object sender, EventArgs e)
-        {
-            comboBoxLine.Items.Clear();
-            int line_num = CSVtextBox.Text.Count(f => f == '\n');
-
-            for (int i = 0; i < line_num; i++)
-            {
-                comboBoxLine.Items.Add(i.ToString());
-            }
-        }
-
-        private void comboBoxLine_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int selected_line;
-            if (int.TryParse(comboBoxLine.Text, out selected_line))
-            {
-                textBoxShowTime.Text = getShowTime(selected_line);
-            }
-        }
-
-        private void textBoxShowTime_TextChanged(object sender, EventArgs e)
-        {
-            int selected_line;
-            if (int.TryParse(comboBoxLine.Text, out selected_line))
-            {
-                setShowTime(selected_line, textBoxShowTime.Text);
-            }
         }
 
         private string getShowTime(int line)

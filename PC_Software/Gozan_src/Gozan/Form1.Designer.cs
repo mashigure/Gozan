@@ -48,12 +48,6 @@
             this.howToEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutGozanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBoxShowTime = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBoxLine = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.button_LEDnum = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelLEDnumber = new System.Windows.Forms.Label();
@@ -63,7 +57,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -218,7 +211,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.button_LEDnum);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.labelLEDnumber);
@@ -227,68 +219,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.CSVtextBox);
             this.splitContainer1.Size = new System.Drawing.Size(1184, 837);
-            this.splitContainer1.SplitterDistance = 100;
+            this.splitContainer1.SplitterDistance = 32;
             this.splitContainer1.TabIndex = 1;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBoxShowTime);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.comboBoxLine);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 35);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(347, 55);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "one shot of illumination";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(312, 25);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(22, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "ms";
-            // 
-            // textBoxShowTime
-            // 
-            this.textBoxShowTime.Location = new System.Drawing.Point(226, 22);
-            this.textBoxShowTime.Name = "textBoxShowTime";
-            this.textBoxShowTime.Size = new System.Drawing.Size(80, 23);
-            this.textBoxShowTime.TabIndex = 6;
-            this.textBoxShowTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBoxShowTime.TextChanged += new System.EventHandler(this.textBoxShowTime_TextChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(156, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "show time:";
-            // 
-            // comboBoxLine
-            // 
-            this.comboBoxLine.FormattingEnabled = true;
-            this.comboBoxLine.Location = new System.Drawing.Point(53, 22);
-            this.comboBoxLine.Name = "comboBoxLine";
-            this.comboBoxLine.Size = new System.Drawing.Size(82, 23);
-            this.comboBoxLine.TabIndex = 3;
-            this.comboBoxLine.DropDown += new System.EventHandler(this.comboBoxLine_DropDown);
-            this.comboBoxLine.SelectedIndexChanged += new System.EventHandler(this.comboBoxLine_SelectedIndexChanged);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 15);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Line:";
             // 
             // button_LEDnum
             // 
@@ -318,7 +250,7 @@
             this.labelLEDnumber.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.labelLEDnumber.Size = new System.Drawing.Size(19, 21);
             this.labelLEDnumber.TabIndex = 0;
-            this.labelLEDnumber.Text = "0";
+            this.labelLEDnumber.Text = "1";
             // 
             // CSVtextBox
             // 
@@ -330,7 +262,7 @@
             this.CSVtextBox.Multiline = true;
             this.CSVtextBox.Name = "CSVtextBox";
             this.CSVtextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.CSVtextBox.Size = new System.Drawing.Size(1184, 733);
+            this.CSVtextBox.Size = new System.Drawing.Size(1184, 801);
             this.CSVtextBox.TabIndex = 0;
             this.CSVtextBox.WordWrap = false;
             this.CSVtextBox.TextChanged += new System.EventHandler(this.CSVtextBox_TextChanged);
@@ -357,8 +289,6 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -388,12 +318,6 @@
         private ToolStripMenuItem newFileToolStripMenuItem;
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem addNewLineToolStripMenuItem;
-        private Label label2;
-        private ComboBox comboBoxLine;
-        private GroupBox groupBox1;
-        private TextBox textBoxShowTime;
-        private Label label3;
-        private Label label4;
         private ToolStripMenuItem howToEditToolStripMenuItem;
     }
 }

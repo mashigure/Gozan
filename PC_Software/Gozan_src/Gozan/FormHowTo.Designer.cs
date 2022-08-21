@@ -54,11 +54,10 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(23, 213);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(531, 75);
+            this.label2.Size = new System.Drawing.Size(435, 30);
             this.label2.TabIndex = 1;
-            this.label2.Text = "CSVファイルには、1行にLEDの数分の発光させる色とその点灯時間を記載します。Arduino側ライブラリでは、\r\n一度に1行分を読み込んで点灯させ、指定時間が経" +
-    "過すると次の行を読み込むという処理を繰り返し行います。\r\n\r\n１行の要素は、１列目がその行の点灯時間です。\r\n２列目以降がLEDの発光色指定で、LEDが接続され" +
-    "ている順番にLEDの数だけ記載します。";
+            this.label2.Text = "CSVファイルには、1行にLEDの数分の発光させる色を記載します。\r\n本ソフトウェアは、CSVファイルの情報をArduino側ライブラリで使用できる配列に変換しま" +
+    "す。";
             // 
             // label3
             // 
@@ -82,26 +81,27 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(23, 362);
+            this.label5.Location = new System.Drawing.Point(23, 327);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(581, 60);
+            this.label5.Size = new System.Drawing.Size(489, 45);
             this.label5.TabIndex = 4;
-            this.label5.Text = "１列目がその行の点灯時間、２列目以降がLEDの発光色指定で、LEDが接続されている順番にLEDの数だけ記載します。\r\n時間の単位はミリ秒[ms]\r\n発光色は「#」" +
-    "の後ろにRGBを16進数2桁ずつ6文字（#00000000～#FFFFFF）\r\nまたは1桁ずつ3文字（#000～#FFF）で記載してください。";
+            this.label5.Text = "各LEDの発光色をカンマ「,」で区切りで、LEDが接続されている順番にLEDの数だけ記載します。\r\n色の指定は「0x」の後ろにRGBを16進数2桁ずつ6文字（0x" +
+    "00000000～0xFFFFFF）\r\nまたは「#」の後ろにRGBを16進数2桁ずつ6文字（#00000000～#FFFFFF）の形式で記載してください。";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(78, 302);
+            this.textBox1.Location = new System.Drawing.Point(70, 264);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(434, 46);
             this.textBox1.TabIndex = 5;
-            this.textBox1.Text = "1000,#000000,#FF0000,#00FF00,#0000FF,#FFFFFF\r\n1000,#000,#100,#300,#700,#F00";
+            this.textBox1.Text = "0x000000,0xFF0000,0x00FF00,0x0000FF,0xFFFFFF\r\n#000000,#FF0000,#00FF00,#0000FF,#FF" +
+    "FFFF";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(34, 305);
+            this.label6.Location = new System.Drawing.Point(33, 264);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(31, 15);
             this.label6.TabIndex = 6;
@@ -109,7 +109,7 @@
             // 
             // buttonClose
             // 
-            this.buttonClose.Location = new System.Drawing.Point(529, 446);
+            this.buttonClose.Location = new System.Drawing.Point(537, 406);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 23);
             this.buttonClose.TabIndex = 7;
@@ -121,7 +121,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 481);
+            this.ClientSize = new System.Drawing.Size(624, 441);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox1);

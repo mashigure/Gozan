@@ -2,10 +2,12 @@
 
 Gozan::Gozan(uint16_t led_num, int16_t pin, neoPixelType type):
     neo_pix(led_num, pin, type),
-    pattern(),
     counter(),
-    current_seq(0),
+    led_data(nullptr),
+    max_seq(0),
+    show_time(0),
     repeat(true),
+    current_seq(0),
     is_playing(false)
 {
 }
@@ -13,7 +15,6 @@ Gozan::Gozan(uint16_t led_num, int16_t pin, neoPixelType type):
 void Gozan::begin(void)
 {
     neo_pix.begin();
-    counter.reset(0);
 }
 
 void Gozan::show(void)
@@ -26,17 +27,18 @@ void Gozan::clear(void)
     neo_pix.clear();
 }
 
-void Gozan::update(void)
+void Gozan::autoPlay(uint32_t const *data, uint32_t sequens_num, uint32_t one_shot_ms, bool repeat)
 {
-    if (!is_playing && repeat)
+    if (data != nullptr)
     {
-        /* restart */
-        is_playing  = true;
-        current_seq = 0;
+        led_data        = data;
+        max_seq         = sequens_num;
+        this->show_time = one_shot_ms;
+        this->repeat    = repeat;
+        is_playing      = true;
+        current_seq     = 0u;
         counter.reset(0);
     }
-
-    play();
 }
 
 bool Gozan::isPlaying(void)
@@ -44,60 +46,50 @@ bool Gozan::isPlaying(void)
     return is_playing;
 }
 
-void Gozan::setPattern(PatternData const *pattern_data, bool repeat)
+void Gozan::setPixelColor(uint32_t const *data, uint16_t sequence)
 {
-    if (pattern_data != nullptr)
-    {
-        this->pattern = Pattern(pattern_data);
-        this->repeat  = repeat;
-        is_playing    = false;
-        current_seq   = 0;
-        counter.reset(0);
-    }
-}
-
-void Gozan::setPixelColor(uint16_t sequence)
-{
-    uint16_t led_num = pattern.getLedLength();
-
-    if (neo_pix.numPixels() < led_num)
-    {
-        led_num = neo_pix.numPixels();
-    }
+    uint16_t led_num = neo_pix.numPixels();
 
     for (uint16_t i=0; i<led_num; i++)
     {
-        neo_pix.setPixelColor(i, pattern.getPixelColor(sequence, i));
+        neo_pix.setPixelColor(i, getPixelColor(data, sequence, i));
     }
 }
 
-// private function
-void Gozan::play(void)
+uint32_t Gozan::getPixelColor(uint32_t const *data, uint16_t sequence, uint16_t led_no)
+{
+    uint32_t dat_pos = (sequence * neo_pix.numPixels()) + led_no;
+
+    if (data == nullptr)
+    {
+        return 0u;
+    }
+
+    return data[dat_pos];
+}
+
+void Gozan::update(void)
 {
     if (is_playing && counter.isCounted())
     {
-        if (pattern.getMaxSequence() <= current_seq)
+        if (max_seq <= current_seq)
         {
-            is_playing = false;
-            return;
+            if (repeat)
+            {
+                /* restart */
+                is_playing  = true;
+                current_seq = 0;
+            }
+            else
+            {
+                is_playing = false;
+                return;
+            }
         }
 
-        setPixelColor(current_seq);
+        setPixelColor(led_data, current_seq);
         show();
-
-        int32_t delay_time = pattern.getShowTime(current_seq);
-
-        if (0 <= delay_time)
-        {
-            counter.reset(delay_time);
-        }
-        else
-        {
-            /* stop playing */
-            this->repeat = false;
-            is_playing   = false;
-        }
-
+        counter.reset(show_time);
         current_seq++;
     }
 }
